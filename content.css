@@ -1,0 +1,159 @@
+/* content.css */
+/* Styles for the floating button and the injected popup */
+
+/* General font for the extension UI */
+.dsa-tracker-floating-btn,
+.dsa-tracker-popup {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Floating Action Button */
+.dsa-tracker-floating-btn {
+    position: fixed;
+    bottom: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    background-color: #22c55e; /* Green */
+    color: white;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10000; /* Ensure it's above most page content */
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dsa-tracker-floating-btn:hover {
+    background-color: #16a34a; /* Darker green */
+    transform: scale(1.05);
+}
+
+.dsa-tracker-floating-btn svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* Popup Overlay (for dimming background) */
+.dsa-tracker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 9999; /* Below the popup, above page content */
+}
+
+/* Main Popup Container */
+.dsa-tracker-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the popup */
+    width: 380px; /* Fixed width for the popup */
+    max-height: 90vh; /* Max height, scroll if content overflows */
+    overflow-y: auto;
+    z-index: 10001; /* Above overlay and page content */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 1px solid #e5e7eb; /* Light border */
+    background-color: #22c55e;
+}
+
+/* Close button for the popup */
+.dsa-tracker-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    cursor: pointer;
+    color: #9ca3af; /* Gray color */
+    padding: 0 5px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.dsa-tracker-close-btn:hover {
+    color: #ef4444; /* Red on hover */
+}
+
+/* Input fields and textareas */
+.dsa-tracker-input,
+.dsa-tracker-textarea {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95em;
+    color: #374151;
+    background-color: #f9fafb;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dsa-tracker-input:focus,
+.dsa-tracker-textarea:focus {
+    outline: none;
+    border-color: #3b82f6; /* Blue focus */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Primary Button Style */
+.dsa-tracker-btn-primary {
+    background-color: #22c55e; /* Green */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: none; /* Ensure no default button border */
+}
+
+.dsa-tracker-btn-primary:hover {
+    background-color: #16a34a; /* Darker green on hover */
+}
+
+/* Problem item in the list */
+.dsa-tracker-problem-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Subtle shadow for list items */
+    position: relative;
+}
+
+.dsa-tracker-problem-item a {
+    color: #3b82f6; /* Blue for links */
+    text-decoration: none;
+    word-break: break-all; /* Ensure long URLs wrap */
+}
+
+.dsa-tracker-problem-item a:hover {
+    text-decoration: underline;
+}
+
+/* Delete button for problem items */
+.dsa-tracker-delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #ef4444; /* Red for delete */
+    cursor: pointer;
+    font-size: 1.2em;
+    line-height: 1;
+    padding: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.dsa-tracker-delete-btn:hover {
+    opacity: 1;
+}
+
+/* Ensure Inter font is loaded for the content script's context */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
