@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', async () => {
     // DOM Elements
     const problemTitleInput = document.getElementById('problemTitle');
@@ -21,18 +20,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         intervals: [1, 3, 7, 14, 30]
     };
 
-    function loadProblems() {
-        chrome.storage.sync.get(['dsaProblems'], (result) => {
-            const problems = result.dsaProblems || [];
-            renderProblems(problems);
-        });
-    }
-
     // Initialize
     loadSettings();
     loadProblems();
     setupEventListeners();
-
 
     function setupEventListeners() {
         addProblemBtn.addEventListener('click', addProblem);
@@ -138,7 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         //         });
         //     });
         // }
-
+        
         //anuj
         renderRevisions(problems);
     }
@@ -151,7 +142,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderRevisions(problems) {
-        console.log("^%this is allrederRevison ", problems)
         renderTodaysRevisions(problems);
         renderUpcomingRevisions(problems);
     }
@@ -222,6 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     //         upcomingRevisions.appendChild(div);
     //     });
     // }
+
 
     function renderUpcomingRevisions(problems) {
         const today = new Date();
@@ -326,48 +317,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     //                     revisionDates: problem.revisionDates.filter(d => d !== date)
     //                 };
     //             }
-    //             // const newProblem=problem.filter((e)=>e.revisionDates!=[])
-    //             // console.log("This newUpdated list with revisionDates not empty",newProblem)
-    //             console.log("This is updated Problem list ",problem);
     //             return problem;
     //         });
+
     //         chrome.storage.sync.set({ dsaProblems: updatedProblems }, () => {
     //             loadProblems(); // Refresh the display
     //         });
     //     });
-    // } //older code
+    // }
 
-    //updated code
     function removeFromSchedule(url, date) {
-        chrome.storage.sync.get(['dsaProblems'], (result) => {
-            const problems = result.dsaProblems || [];
+    chrome.storage.sync.get(['dsaProblems'], (result) => {
+        const problems = result.dsaProblems || [];
 
-            const updatedProblems = problems
-                .map(problem => {
-                    if (problem.url === url) {
-                        const filteredDates = problem.revisionDates.filter(d => d !== date);
-                        // Only return the updated problem if revisionDates is not empty
-                        if (filteredDates.length > 0) {
-                            return { ...problem, revisionDates: filteredDates };
-                        } else {
-                            return null; // Mark for removal
-                        }
+        const updatedProblems = problems
+            .map(problem => {
+                if (problem.url === url) {
+                    const filteredDates = problem.revisionDates.filter(d => d !== date);
+                    // Only return the updated problem if revisionDates is not empty
+                    if (filteredDates.length > 0) {
+                        return { ...problem, revisionDates: filteredDates };
+                    } else {
+                        return null; // Mark for removal
                     }
-                    return problem;
-                })
-                .filter(problem => problem !== null); // Remove problems with empty revisionDates
+                }
+                return problem;
+            })
+            .filter(problem => problem !== null); // Remove problems with empty revisionDates
 
-            chrome.storage.sync.set({ dsaProblems: updatedProblems }, () => {
-                loadProblems(); // Refresh the display
-            });
+        chrome.storage.sync.set({ dsaProblems: updatedProblems }, () => {
+            loadProblems(); // Refresh the display
         });
-    }
-
-
+    });
+}
 
     function formatDate(isoDate) {
         const options = { weekday: 'short', month: 'short', day: 'numeric' };
         return new Date(isoDate).toLocaleDateString(undefined, options);
+    }
+
+    function loadProblems() {
+        chrome.storage.sync.get(['dsaProblems'], (result) => {
+            const problems = result.dsaProblems || [];
+            renderProblems(problems);
+        });
     }
 
     function saveProblems(problems) {
@@ -384,7 +377,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (title && url) {
             chrome.storage.sync.get(['dsaProblems'], (data) => {
                 const problems = data.dsaProblems || [];
-                console.log("This is problemList on this problem is already tracked ", problems)
                 const isDuplicate = problems.some(p => p.url === url);
 
                 if (isDuplicate) {
@@ -455,32 +447,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     });
+});
 
-    function clearAllUpcomingProblems() {
-        if (confirm('Are you sure you want to remove ALL upcoming problems? This cannot be undone.')) {
-            chrome.storage.sync.get(['dsaProblems'], (result) => {
-                const problems = result.dsaProblems || [];
+function clearAllUpcomingProblems() {
+    if (confirm('Are you sure you want to remove ALL upcoming problems? This cannot be undone.')) {
+        chrome.storage.sync.get(['dsaProblems'], (result) => {
+            const problems = result.dsaProblems || [];
 
-                // Filter out problems that have no future revisions
-                const today = new Date().toISOString().split('T')[0];
-                const updatedProblems = problems.filter(problem => {
-                    if (!problem.revisionDates) return true;
+            // Filter out problems that have no future revisions
+            const today = new Date().toISOString().split('T')[0];
+            
+            const updatedProblems = problems.filter(problem => {
+                if (!problem.revisionDates) return true;
 
-                    // Keep only problems with no future revisions
-                    const hasFutureRevisions = problem.revisionDates.some(date => date >= today);
-                    return !hasFutureRevisions;
-                });
-
-                chrome.storage.sync.set({ dsaProblems: updatedProblems }, () => {
-                    loadProblems(); // Refresh the display
-                    console.log("Refreshed ");
-                });
+                // Keep only problems with no future revisions
+                const hasFutureRevisions = problem.revisionDates.some(date => date >= today);
+                return !hasFutureRevisions;
             });
-        }
-    }
 
-    // Open profile page
-    document.getElementById('profileBtn').addEventListener('click', function () {
-        chrome.tabs.create({ url: chrome.runtime.getURL('profile.html') });
-    });
+            chrome.storage.sync.set({ dsaProblems: updatedProblems }, () => {
+                loadProblems(); // Refresh the display
+            });
+            
+        });
+    }
+}
+
+// Open profile page
+document.getElementById('profileBtn').addEventListener('click', function() {
+    chrome.tabs.create({ url: chrome.runtime.getURL('profile.html') });
 });

@@ -21,7 +21,7 @@ chrome.runtime.onInstalled.addListener(async () => {
             await chrome.storage.sync.set({ 
                 dsaProblems: [],
                 revisionSettings: {
-                    intervals: [1, 3, 7, 14, 30],
+                    intervals: [1, 3, 5],
                     dailyLimit: 5
                 }
             });
