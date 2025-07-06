@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Default revision settings
     let revisionSettings = {
-        intervals: [1, 3, 7, 14, 30]
+        intervals: [1, 3, 5]
     };
 
     function loadProblems() {
@@ -226,7 +226,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderUpcomingRevisions(problems) {
         const today = new Date();
         const upcoming = [];
-
         problems.forEach(problem => {
             if (problem.revisionDates) {
                 problem.revisionDates.forEach(date => {
@@ -241,7 +240,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
         });
-
         upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         // Get DOM elements
