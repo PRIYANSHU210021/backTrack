@@ -83,6 +83,7 @@ backTrack/
 If you're working on DSA or Chrome extensions and want to collaborate or ask questions, feel free to connect with me!
 
 **🔗 GitHub:** [@PRIYANSHU210021](https://github.com/PRIYANSHU210021)
+**🔗 LinkedIn:** [@PRIYANSHU210021](https://www.linkedin.com/in/priyanshu-prajapati006/)
 
 ---
 
