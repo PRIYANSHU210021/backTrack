@@ -3,13 +3,15 @@
 // It injects a floating button and handles the display and logic
 // of the DSA Problem Tracker popup directly on the page.
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
     // Only proceed if the script is running on a LeetCode or GeeksforGeeks problem page
     const currentUrl = window.location.href;
     const isSupportedPlatform = currentUrl.includes('leetcode.com/problems/') || currentUrl.includes('geeksforgeeks.org/problems/');
 
     if (!isSupportedPlatform) {
-        // If not on a supported platform, don't inject any UI
+        // If not on a suported platform, don't show any UI
         return;
     }
 

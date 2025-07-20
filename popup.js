@@ -1,6 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // DOM Elements
     const problemTitleInput = document.getElementById('problemTitle');
     const problemUrlInput = document.getElementById('problemUrl');
     const problemNotesInput = document.getElementById('problemNotes');
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const saveSettingsBtn = document.getElementById('saveSettings');
     const cancelSettingsBtn = document.getElementById('cancelSettings');
 
-    // Default revision settings
+    // Default revision setting
     let revisionSettings = {
         intervals: [1, 3, 5]
     };
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Initialize
     loadSettings();
     loadProblems();
     setupEventListeners();
