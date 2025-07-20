@@ -113,33 +113,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderProblems(problems) {
-        // problemsContainer.innerHTML = '';
-        // if (problems.length === 0) {
-        //     noProblemsMessage.classList.remove('hidden');
-        // } else {
-        //     noProblemsMessage.classList.add('hidden');
-        //     problems.forEach((problem, index) => {
-        //         const problemDiv = document.createElement('div');
-        //         problemDiv.className = 'problem-item';
-        //         problemDiv.innerHTML = `
-        //             <h3 class="text-md font-semibold text-gray-900 mb-1">${problem.title || 'No Title'}</h3>
-        //             <a href="${problem.url}" target="_blank" class="text-sm text-blue-600 hover:underline block mb-1">${problem.url}</a>
-        //             ${problem.notes ? `<p class="text-sm text-gray-600">${problem.notes}</p>` : ''}
-        //             ${problem.revisionDates ? `<div class="text-xs text-gray-500">Next review: ${getNextReviewDate(problem)}</div>` : ''}
-        //             <button class="delete-btn" data-index="${index}">&times;</button>
-        //         `;
-        //         problemsContainer.appendChild(problemDiv);
-        //     });
-
-        //     problemsContainer.querySelectorAll('.delete-btn').forEach(button => {
-        //         button.addEventListener('click', (event) => {
-        //             const indexToDelete = parseInt(event.target.dataset.index);
-        //             deleteProblem(indexToDelete);
-        //         });
-        //     });
-        // }
-
-        //anuj
         renderRevisions(problems);
     }
 
@@ -183,45 +156,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // function renderUpcomingRevisions(problems) {
-    //     const today = new Date();
-    //     const upcoming = [];
-
-    //     problems.forEach(problem => {
-    //         if (problem.revisionDates) {
-    //             problem.revisionDates.forEach(date => {
-    //                 const daysDiff = Math.ceil((new Date(date) - today) / (1000 * 60 * 60 * 24));
-    //                 if (daysDiff > 0) {
-    //                     upcoming.push({
-    //                         date,
-    //                         daysDiff,
-    //                         problem
-    //                     });
-    //                 }
-    //             });
-    //         }
-    //     });
-
-    //     upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
-    //     const nextFive = upcoming.slice(0, 5);
-
-    //     upcomingRevisions.innerHTML = '';
-
-    //     if (nextFive.length === 0) {
-    //         upcomingRevisions.innerHTML = '<p class="text-sm text-gray-500">No upcoming revisions scheduled.</p>';
-    //         return;
-    //     }
-
-    //     nextFive.forEach(item => {
-    //         const div = document.createElement('div');
-    //         div.className = 'upcoming-item mb-2';
-    //         div.innerHTML = `
-    //             <div class="text-xs text-gray-500">${formatDate(item.date)} (in ${item.daysDiff} days)</div>
-    //             <div class="text-sm font-medium">${item.problem.title}</div>
-    //         `;
-    //         upcomingRevisions.appendChild(div);
-    //     });
-    // }
 
     function renderUpcomingRevisions(problems) {
         const today = new Date();
@@ -242,7 +176,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        // Get DOM elements
         const upcomingRevisions = document.getElementById('upcomingRevisions');
         const showMoreBtn = document.getElementById('showMoreBtn');
         const additionalRevisions = document.getElementById('additionalRevisions');
@@ -291,7 +224,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 additionalRevisions.appendChild(createProblemItem(item));
             });
 
-            // Toggle functionality
+            // Toggle karne pe
             showMoreBtn.addEventListener('click', () => {
                 if (additionalRevisions.classList.contains('hidden')) {
                     additionalRevisions.classList.remove('hidden');
@@ -314,28 +247,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // function removeFromSchedule(url, date) {
-    //     chrome.storage.sync.get(['dsaProblems'], (result) => {
-    //         const problems = result.dsaProblems || [];
-    //         const updatedProblems = problems.map(problem => {
-    //             if (problem.url === url) {
-    //                 return {
-    //                     ...problem,
-    //                     revisionDates: problem.revisionDates.filter(d => d !== date)
-    //                 };
-    //             }
-    //             // const newProblem=problem.filter((e)=>e.revisionDates!=[])
-    //             // console.log("This newUpdated list with revisionDates not empty",newProblem)
-    //             console.log("This is updated Problem list ",problem);
-    //             return problem;
-    //         });
-    //         chrome.storage.sync.set({ dsaProblems: updatedProblems }, () => {
-    //             loadProblems(); // Refresh the display
-    //         });
-    //     });
-    // } //older code
-
-    //updated code
     function removeFromSchedule(url, date) {
         chrome.storage.sync.get(['dsaProblems'], (result) => {
             const problems = result.dsaProblems || [];

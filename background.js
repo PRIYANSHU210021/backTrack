@@ -1,9 +1,8 @@
-// Initialize storage with error handling
+// Initialize storage with error handling by chatgpt baba
 chrome.runtime.onInstalled.addListener(async () => {
     try {
         // Clear existing context menu to prevent duplicates
         await chrome.contextMenus.removeAll();
-        
         // Create new context menu
         chrome.contextMenus.create({
             id: 'addDsaProblem',
@@ -53,7 +52,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
             const result = await chrome.storage.sync.get(['dsaProblems', 'revisionSettings']);
             const problems = result.dsaProblems || [];
             const settings = result.revisionSettings || { dailyLimit: 5 };
-            
             const today = new Date().toISOString().split('T')[0];
             const todaysProblems = problems.filter(p => 
                 p.revisionDates?.includes(today)
@@ -73,7 +71,6 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
         }
     }
 });
-
 // Notification click handler
 chrome.notifications.onClicked.addListener(() => {
     chrome.tabs.create({ url: chrome.runtime.getURL('popup.html') });
